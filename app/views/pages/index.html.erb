@@ -1,2 +1,9 @@
-<h1>Pages#index</h1>
-<p>Find me in app/views/pages/index.html.erb</p>
+<h1><span class="brand">Clio + Calliope</span> Payments</h1>
+
+<% if user_signed_in? %>
+  <p>Welcome, <%= current_user.name %>!</p>
+  <%= link_to fa_icon('money', text: "Make a Payment!"), new_payment_path, class: 'btn btn-success' %>
+<% else %>
+  <p>To make a payment, first sign in using Facebook:</p>
+  <%= link_to fa_icon('sign-in', text: 'Sign in with Facebook'), signin_path, class: 'btn btn-primary' %>
+<% end %>
