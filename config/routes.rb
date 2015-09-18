@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'pages/index'
+
   resources :payments
   resources :customers
   resources :invoices
@@ -7,5 +9,5 @@ Rails.application.routes.draw do
   get '/signout' => 'sessions#destroy', :as => :signout
   get '/auth/failure' => 'sessions#failure'
 
-  root 'payment#new'
+  root 'pages#index'
 end
