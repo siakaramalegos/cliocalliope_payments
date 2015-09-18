@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  get 'payment/new'
-
+  resources :payments
   resources :customers
   resources :invoices
   get '/auth/:provider/callback' => 'sessions#create'

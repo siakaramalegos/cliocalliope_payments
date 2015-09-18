@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  invoice_id: 
+  total_payment: 9.99
+  notes: MyString
+
+two:
+  invoice_id: 
+  total_payment: 9.99
+  notes: MyString
