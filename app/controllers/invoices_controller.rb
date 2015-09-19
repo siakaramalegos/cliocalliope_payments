@@ -1,5 +1,7 @@
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :admin_only, except: [:show]
 
   # GET /invoices
   # GET /invoices.json
