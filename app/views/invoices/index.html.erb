@@ -1,8 +1,6 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Listing Invoices</h1>
 
-<table>
+<table class="table table-striped table-hover">
   <thead>
     <tr>
       <th>Number</th>
@@ -18,7 +16,7 @@
     <% @invoices.each do |invoice| %>
       <tr>
         <td><%= invoice.number %></td>
-        <td><%= invoice.customer %></td>
+        <td><%= invoice.customer.try(:name) %></td>
         <td><%= invoice.invoice_date %></td>
         <td><%= invoice.due_date %></td>
         <td><%= invoice.total_amount %></td>
