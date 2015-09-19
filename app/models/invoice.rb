@@ -4,6 +4,6 @@ class Invoice < ActiveRecord::Base
 
   def description
     # TODO:  make 2 decimal places
-    "#{number}: #{customer.name} $#{total_amount} USD due #{due_date}"
+    "#{customer.name} invoice ##{number}"
   end
 end
