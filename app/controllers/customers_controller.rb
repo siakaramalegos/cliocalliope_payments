@@ -28,7 +28,6 @@ class CustomersController < ApplicationController
   def create
     @customer = Customer.new(customer_params)
     customer = Stripe::Customer.create(
-      :source  => params[:stripeToken],
       :email => @customer.email,
       :description => @customer.name
     )
