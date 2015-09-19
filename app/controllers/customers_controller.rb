@@ -27,6 +27,12 @@ class CustomersController < ApplicationController
   # POST /customers.json
   def create
     @customer = Customer.new(customer_params)
+    customer = Stripe::Customer.create(
+      :source  => params[:stripeToken],
+      :email => @customer.email,
+      :description => @customer.name
+    )
+    @customer.stripe_customer_id = customer.id
 
     respond_to do |format|
       if @customer.save
@@ -71,6 +77,6 @@ class CustomersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def customer_params
-      params.require(:customer).permit(:name, :contact_name, :email)
+      params.require(:customer).permit(:name, :contact_name, :email, :stripe_customer_id)
     end
 end
