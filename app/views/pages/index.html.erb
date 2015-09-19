@@ -1,9 +1,19 @@
 <h1><span class="brand">Clio + Calliope</span> Payments</h1>
 
 <% if user_signed_in? %>
-  <p>Welcome, <%= current_user.name %>!</p>
-  <%= link_to fa_icon('money', text: "Make a Payment!"), new_payment_path, class: 'btn btn-success' %>
+
+  <p>Welcome, <%= current_user.name %>!  Select an invoice to pay:</p>
+    <% @invoices.each do |invoice| %>
+      <div class="well">
+        <h4>Invoice Number <%= invoice.number %> <small><%= invoice.customer.name %></small></h4>
+        <p><%= number_to_currency invoice.total_amount %> due on <%= invoice.due_date.stamp('September 1, 2015') %></p>
+        <%= link_to fa_icon('money', text: "Make a Payment!"), new_payment_path(invoice_id: invoice.id), class: 'btn btn-success' %>
+      </div>
+    <% end %>
+
 <% else %>
+
   <p>To make a payment, first sign in using Facebook:</p>
   <%= link_to fa_icon('sign-in', text: 'Sign in with Facebook'), signin_path, class: 'btn btn-primary' %>
+
 <% end %>
