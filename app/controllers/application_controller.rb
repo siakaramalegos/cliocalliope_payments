@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
       return true if current_user
     end
 
+    # TODO:  limits users to only see their stuff
     def correct_user?
       @user = User.find(params[:id])
       unless current_user == @user
@@ -30,6 +31,12 @@ class ApplicationController < ActionController::Base
     def authenticate_user!
       if !current_user
         redirect_to root_url, :alert => 'You need to sign in for access to this page.'
+      end
+    end
+
+    def admin_only
+      unless current_user.admin?
+        redirect_to :back, :alert => "Access denied."
       end
     end
 
