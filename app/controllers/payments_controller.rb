@@ -1,5 +1,7 @@
 class PaymentsController < ApplicationController
   before_action :set_payment, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :admin_only, except: [:show, :new, :create]
 
   # GET /payments
   # GET /payments.json
@@ -14,7 +16,16 @@ class PaymentsController < ApplicationController
 
   # GET /payments/new
   def new
-    @payment = Payment.new
+    if params[:invoice_id]
+      @payment = Payment.new
+      @invoice = Invoice.find(params[:invoice_id])
+      @customer = @invoice.customer
+      @merchant_fees = (@invoice.total_amount * 0.029) + 0.30
+      @payment.total_payment = @invoice.total_amount + @merchant_fees
+      @amount = @payment.total_payment * 100
+    else
+      redirect_to :root, alert: 'Please select an invoice to pay.'
+    end
   end
 
   # GET /payments/1/edit
@@ -25,16 +36,40 @@ class PaymentsController < ApplicationController
   # POST /payments.json
   def create
     @payment = Payment.new(payment_params)
+    @invoice = Invoice.find(payment_params[:invoice_id])
+    @customer = @invoice.customer
+
+    token = params[:stripeToken]
+
+    # Amount in cents
+    @amount = (@payment.total_payment * 100).to_i
+
+    customer = Stripe::Customer.create(
+      :email => @customer.email,
+      :description => @customer.name,
+      :card => token
+    )
+
+    charge = Stripe::Charge.create(
+      :customer    => customer.id,
+      :amount      => @amount,
+      :description => @invoice.description,
+      :currency    => 'usd'
+    )
 
     respond_to do |format|
       if @payment.save
-        format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
+        # TODO:  add mailer for confirmation
+        format.html { redirect_to @payment, notice: 'Payment was successfully submitted.' }
         format.json { render :show, status: :created, location: @payment }
       else
         format.html { render :new }
         format.json { render json: @payment.errors, status: :unprocessable_entity }
       end
     end
+  rescue Stripe::CardError => e
+    flash[:error] = e.message
+    redirect_to root_url
   end
 
   # PATCH/PUT /payments/1
