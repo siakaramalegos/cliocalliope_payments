@@ -20,7 +20,6 @@ class ApplicationController < ActionController::Base
       return true if current_user
     end
 
-    # TODO:  limits users to only see their stuff
     def correct_user?
       @user = User.find(params[:id])
       unless current_user == @user
