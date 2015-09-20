@@ -1,13 +1,11 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Invoice:</strong>
-  <%= @payment.invoice %>
+  <%= @payment.invoice.description %>
 </p>
 
 <p>
   <strong>Total payment:</strong>
-  <%= @payment.total_payment %>
+  <%= number_to_currency @payment.total_payment %>
 </p>
 
 <p>
