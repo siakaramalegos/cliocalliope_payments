@@ -12,6 +12,11 @@ class PaymentsController < ApplicationController
   # GET /payments/1
   # GET /payments/1.json
   def show
+    unless current_user.admin?
+      if @payment.invoice.customer.user != current_user
+        redirect_to :root, alert: 'You do not have access to that payment.'
+      end
+    end
   end
 
   # GET /payments/new

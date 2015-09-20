@@ -1,7 +1,7 @@
 class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :admin_only, except: [:show]
+  before_action :admin_only
 
   # GET /customers
   # GET /customers.json
