@@ -1,43 +1,42 @@
 <%= simple_form_for(@payment) do |f| %>
   <%= f.error_notification %>
 
-  <div class="well">
-    <h4>Invoice Number <%= @invoice.number %> <small><%= @invoice.customer.name %></small></h4>
-    <p>Due on <%= @invoice.due_date.stamp('September 1, 2015') %></p>
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
 
-    <table class="table table-striped table-hover">
-      <thead>
-        <th>Description</th>
-        <th>Amount</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Invoice total</td>
-          <td><%= number_to_currency @invoice.total_amount %></td>
-        </tr>
-        <tr>
-          <td>Stripe merchant fees</td>
-          <td><%= number_to_currency @merchant_fees %></td>
-        </tr>
-        <tr>
-          <td><strong>Total Payment</strong></td>
-          <td><strong><%= number_to_currency @payment.total_payment %></strong></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="well">
+      <h3>Invoice Number <%= @invoice.number %> <small><%= @invoice.customer.name %></small></h3>
+      <p>Due on <%= @invoice.due_date.stamp('September 1, 2015') %></p>
 
-    <div class="form-inputs">
-      <%= f.hidden_field :invoice_id, value: @invoice.id %>
-      <%= f.hidden_field :total_payment, value: @payment.total_payment%>
-      <%= f.input :notes %>
-    </div>
+      <table class="table table-hover">
+        <thead>
+          <th>Description</th>
+          <th>Amount</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Invoice total</td>
+            <td><%= number_to_currency @invoice.total_amount %></td>
+          </tr>
+          <tr>
+            <td>Stripe merchant fees</td>
+            <td><%= number_to_currency @merchant_fees %></td>
+          </tr>
+          <tr class="info">
+            <td><strong>Total Payment</strong></td>
+            <td><strong><%= number_to_currency @payment.total_payment %></strong></td>
+          </tr>
+        </tbody>
+      </table>
 
-<!--   <div class="form-actions">
-    <%# f.button :submit %>
-  </div> -->
-  </div>
+      <div class="form-inputs">
+        <%= f.hidden_field :invoice_id, value: @invoice.id %>
+        <%= f.hidden_field :total_payment, value: @payment.total_payment%>
+        <%= f.input :notes %>
+      </div>
 
-  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
           data-description="<%= @invoice.description %>"
           data-name="Clio + Calliope LLC"
@@ -45,4 +44,7 @@
           data-email="<%= @customer.email %>"
           data-allow-remember-me="true"
           data-locale="auto"></script>
+    </div>
+  </div>
+</div>
 <% end %>
