@@ -7,7 +7,11 @@
       <div class="well">
         <h4>Invoice Number <%= invoice.number %> <small><%= invoice.customer.name %></small></h4>
         <p><%= number_to_currency invoice.total_amount %> due on <%= invoice.due_date.stamp('September 1, 2015') %></p>
-        <%= link_to fa_icon('money', text: "Make a Payment!"), new_payment_path(invoice_id: invoice.id), class: 'btn btn-success' %>
+        <% if invoice.paid? %>
+          <h5 class="text-success">PAID!</h5>
+        <% else %>
+          <%= link_to fa_icon('money', text: "Make a Payment!"), new_payment_path(invoice_id: invoice.id), class: 'btn btn-success' %>
+        <% end %>
       </div>
     <% end %>
 
