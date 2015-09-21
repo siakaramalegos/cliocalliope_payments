@@ -1,0 +1,13 @@
+<h2>Clio + Calliope Payments Invitation</h2>
+<h3>Dear <%= @customer.contact_name %>,</h3>
+
+<p>Thank you for doing business with Clio + Calliope.  We can accept credit card payments for invoices through the secure <a href="https://stripe.com/us/features#seamless-security" target="_blank">Stripe</a> system.  If you would like to pay using a credit card, please accept this invitation to our mini-app for payments.  Sign up is easy and fast using your Facebook account.</p>
+<p><em>You can rest assured; none of your credit card information will ever be stored on our servers.</em></p>
+
+<%= link_to 'Sign in with Facebook', signin_url, class: 'myButton' %>
+
+<p><strong>Thank you for your business.</strong></p>
+<p>
+  Sia Karamalegos, Clio + Calliope Web Development
+</p>
+
