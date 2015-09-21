@@ -18,6 +18,9 @@ class User < ActiveRecord::Base
       if auth['info']
          user.name = auth['info']['name'] || ""
       end
+      if auth['info']
+         user.email = auth['info']['email'] || ""
+      end
     end
   end
 
