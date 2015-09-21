@@ -23,6 +23,6 @@ class User < ActiveRecord::Base
 
   # pull over the user avatar from Facebook
   def small_image
-    "http://graph.facebook.com/#{self.uid}/picture?type=small"
+    "https://graph.facebook.com/#{self.uid}/picture?type=small"
   end
 end
