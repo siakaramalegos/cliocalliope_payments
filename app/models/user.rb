@@ -29,4 +29,8 @@ class User < ActiveRecord::Base
   def small_image
     "https://graph.facebook.com/#{self.uid}/picture?type=small"
   end
+
+  def name_email
+    "#{name}, #{email}"
+  end
 end
