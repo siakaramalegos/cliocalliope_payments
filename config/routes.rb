@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'pages/index'
+  get '/users' => 'pages#users'
 
   resources :payments
   resources :customers

@@ -1,5 +1,12 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  # OmniAuth.config.test_mode = true
+  OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
+      :provider => 'facebook',
+      :uid => '123545',
+      :info => {:name => 'Foxy Lady', :email => 'info@clioandcalliope.com'}
+      # etc.
+    })
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

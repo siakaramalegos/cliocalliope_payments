@@ -1,0 +1,27 @@
+<h1>Users</h1>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Customer?</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.try(:customer) %></td>
+        <td><%= user.role %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'See Customers', customers_path %>
