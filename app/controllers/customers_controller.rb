@@ -35,6 +35,8 @@ class CustomersController < ApplicationController
 
     respond_to do |format|
       if @customer.save
+        # Deliver order confirmation email
+        CustomerInvitation.send_customer_invite(@customer).deliver_now
         format.html { redirect_to @customer, notice: 'Customer was successfully created.' }
         format.json { render :show, status: :created, location: @customer }
       else
