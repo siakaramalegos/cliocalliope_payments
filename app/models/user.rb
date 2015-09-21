@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
       if auth['info']
          user.email = auth['info']['email'] || ""
       end
+      Admin.notify_new_user(User.first, user).deliver_now
     end
   end
 
