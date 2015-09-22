@@ -18,11 +18,19 @@ class User < ActiveRecord::Base
       if auth['info']
          user.name = auth['info']['name'] || ""
       end
+      if auth['info']
+         user.email = auth['info']['email'] || ""
+      end
+      Admin.notify_new_user(User.first, user).deliver_now
     end
   end
 
   # pull over the user avatar from Facebook
   def small_image
-    "http://graph.facebook.com/#{self.uid}/picture?type=small"
+    "https://graph.facebook.com/#{self.uid}/picture?type=small"
+  end
+
+  def name_email
+    "#{name}, #{email}"
   end
 end

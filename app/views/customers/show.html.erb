@@ -14,8 +14,8 @@
 </p>
 
 <p>
-  <strong>Stripe ID:</strong>
-  <%= @customer.stripe_customer_id %>
+  <strong>Associated User:</strong>
+  <%= @customer.user.try(:name_email) %>
 </p>
 
 <%= link_to 'Edit', edit_customer_path(@customer) %> |

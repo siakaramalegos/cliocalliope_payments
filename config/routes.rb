@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   get 'pages/index'
+  get '/users' => 'pages#users'
+  get 'pages/link_notify'
 
   resources :payments
   resources :customers

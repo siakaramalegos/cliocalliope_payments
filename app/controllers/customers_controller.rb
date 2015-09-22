@@ -17,24 +17,28 @@ class CustomersController < ApplicationController
   # GET /customers/new
   def new
     @customer = Customer.new
+    @users = User.order(:name)
   end
 
   # GET /customers/1/edit
   def edit
+    @users = User.order(:name)
   end
 
   # POST /customers
   # POST /customers.json
   def create
     @customer = Customer.new(customer_params)
-    customer = Stripe::Customer.create(
-      :email => @customer.email,
-      :description => @customer.name
-    )
-    @customer.stripe_customer_id = customer.id
+    # customer = Stripe::Customer.create(
+    #   :email => @customer.email,
+    #   :description => @customer.name
+    # )
+    # @customer.stripe_customer_id = customer.id
 
     respond_to do |format|
       if @customer.save
+        # Deliver order confirmation email
+        CustomerInvitation.send_customer_invite(@customer).deliver_now
         format.html { redirect_to @customer, notice: 'Customer was successfully created.' }
         format.json { render :show, status: :created, location: @customer }
       else
@@ -76,6 +80,6 @@ class CustomersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def customer_params
-      params.require(:customer).permit(:name, :contact_name, :email, :stripe_customer_id)
+      params.require(:customer).permit(:name, :contact_name, :email, :stripe_customer_id, :user_id)
     end
 end
