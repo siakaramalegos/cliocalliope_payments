@@ -15,7 +15,13 @@
       <tr>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td><%= user.try(:customer) %></td>
+        <td>
+          <%= user.try(:customer).try(:name) %>
+          <% if user.customer %>
+            <%# TODO:  make link notification go away eventually  %>
+            <%= link_to 'Send Link Notification', pages_link_notify_path(user_id: user.id), class: 'btn btn-default btn-sm' %>
+          <% end %>
+        </td>
         <td><%= user.role %></td>
       </tr>
     <% end %>
@@ -24,4 +30,4 @@
 
 <br>
 
-<%= link_to 'See Customers', customers_path %>
+<%= link_to 'See Customers', customers_path, class: 'btn btn-default' %>

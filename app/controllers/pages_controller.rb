@@ -16,4 +16,9 @@ class PagesController < ApplicationController
   def users
     @users = User.order(:name)
   end
+
+  def link_notify
+    CustomerInvitation.send_link_notify(params[:user_id]).deliver_now
+    redirect_to :back, notice: 'Customer was notified of link.'
+  end
 end
